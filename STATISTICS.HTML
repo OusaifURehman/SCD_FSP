@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Crime Investigation System – Statistics</title>
+  <style>
+    /* ==== RESET & BASE ==== */
+    *, *::before, *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+    html {
+      font-size: 16px;
+    }
+    body {
+      background: linear-gradient(135deg, #0a0a0a, #1a1a1a);
+      color: #e0e0e0;
+      overflow-x: hidden;
+      line-height: 1.5;
+        background: url(bg-stats.jpeg) no-repeat center center fixed;
+  background-size: cover;
+    }
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    /* ==== HEADER ==== */
+    header {
+      text-align: center;
+      padding: 4rem 1rem;
+      background: rgba(255,0,0,0.15);
+      box-shadow: 0 0 25px rgba(255,0,0,0.5);
+      animation: fadeIn 1.5s ease-in-out;
+    }
+    header h1 {
+      font-size: 2.8rem;
+      color: #ff1a1a;
+      letter-spacing: 3px;
+      text-shadow: 0 0 15px #ff0000;
+      margin-bottom: 0.5rem;
+    }
+    header p {
+      font-size: 1.1rem;
+      color: #aaa;
+    }
+
+    /* ==== STAT CARDS ==== */
+    .stats-cards {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 25px;
+      padding: 2.5rem 1rem;
+    }
+    .stats-cards .card {
+      background: rgba(20,20,20,0.9);
+      border: 1px solid #ff1a1a;
+      border-radius: 15px;
+      width: 260px;
+      text-align: center;
+      padding: 2rem 1rem;
+      box-shadow: 0 0 20px rgba(255,0,0,0.3);
+      transition: transform 0.4s, box-shadow 0.4s;
+      animation: slideUp 1.5s ease-in-out;
+    }
+    .stats-cards .card:hover {
+      transform: scale(1.07);
+      box-shadow: 0 0 30px rgba(255,0,0,0.7);
+    }
+    .stats-cards .card h2 {
+      font-size: 3.0rem;
+      color: #ff1a1a;
+      margin-bottom: 0.5rem;
+    }
+    .stats-cards .card p {
+      font-size: 1.1rem;
+      color: #ccc;
+    }
+
+    /* ==== CHART SECTION ==== */
+    .charts {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 40px;
+      padding: 2.5rem 1rem;
+    }
+    .charts .chart {
+      width: 420px;
+      height: 300px;
+      background: rgba(25,25,25,0.85);
+      border-radius: 15px;
+      border: 1px solid #ff1a1a;
+      text-align: center;
+      padding-top: 1.2rem;
+      box-shadow: 0 0 20px rgba(255,0,0,0.3);
+      animation: fadeIn 2s ease-in-out;
+    }
+    .charts .chart h3 {
+      color: #ff1a1a;
+      margin-bottom: 1rem;
+      font-size: 1.3rem;
+    }
+    .charts .chart img {
+      width: 85%;
+      height: 220px;
+      border-radius: 10px;
+      object-fit: cover;
+    }
+
+    /* ==== TABLE ==== */
+    .data-table {
+      width: 90%;
+      max-width: 1200px;
+      margin: 3rem auto;
+      border-collapse: collapse;
+      background: rgba(20,20,20,0.9);
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 0 20px rgba(255,0,0,0.4);
+      animation: slideUp 2s ease-in-out;
+    }
+    .data-table th, .data-table td {
+      padding: 1rem 0.6rem;
+      text-align: center;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+    .data-table th {
+      background: #ff1a1a;
+      color: #fff;
+      font-size: 0.95rem;
+    }
+    .data-table td {
+      font-size: 0.9rem;
+      color: #ddd;
+    }
+    .data-table tr:hover td {
+      background: rgba(255,0,0,0.2);
+      transition: background 0.3s;
+    }
+
+    /* ==== INSIGHT TEXT BLOCK ==== */
+    .insight {
+      width: 85%;
+      max-width: 1000px;
+      margin: 4rem auto;
+      text-align: center;
+      font-size: 1.1rem;
+      color: #ccc;
+      line-height: 1.6;
+      background: rgba(30,30,30,0.8);
+      padding: 2rem 1rem;
+      border-radius: 15px;
+      box-shadow: 0 0 20px rgba(255,0,0,0.4);
+      animation: fadeIn 2s ease-in-out;
+    }
+
+    /* ==== FOOTER ==== */
+    footer {
+      text-align: center;
+      padding: 2rem 1rem;
+      background: rgba(255,0,0,0.1);
+      color: #888;
+      font-size: 0.85rem;
+      margin-top: 4rem;
+    }
+
+    /* ==== ANIMATIONS ==== */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(25px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes slideUp {
+      from { opacity: 0; transform: translateY(40px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ==== RESPONSIVE ==== */
+    @media (max-width: 768px) {
+      header h1 { font-size: 2.2rem; }
+      .stats-cards { flex-direction: column; align-items: center; }
+      .charts { flex-direction: column; align-items: center; }
+      .charts .chart { width: 90%; height: auto; }
+      .data-table { width: 95%; font-size: 0.85rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Crime Statistics Dashboard</h1>
+    <p>Visual insights into criminal activities and case-trends.</p>
+  </header>
+
+  <section class="stats-cards">
+    <div class="card">
+      <h2>1,256</h2>
+      <p>Total Cases</p>
+    </div>
+    <div class="card">
+      <h2>893</h2>
+      <p>Solved Cases</p>
+    </div>
+    <div class="card">
+      <h2>273</h2>
+      <p>Pending Cases</p>
+    </div>
+    <div class="card">
+      <h2>120</h2>
+      <p>Arrested Suspects</p>
+    </div>
+  </section>
+
+  <section class="charts">
+    <div class="chart">
+      <h3>Crime Types Overview</h3>
+      <img src="type1.jpeg" alt="Crime types distribution chart">
+    </div>
+    <div class="chart">
+      <h3>Solved vs Unsolved</h3>
+      <img src="type2.jpeg" alt="Solved vs Unsolved chart">
+    </div>
+  </section>
+
+  <table class="data-table">
+    <tr>
+      <th>City</th>
+      <th>Total Cases</th>
+      <th>Solved</th>
+      <th>Pending</th>
+      <th>Arrests</th>
+    </tr>
+    <tr>
+      <td>Karachi</td>
+      <td>450</td>
+      <td>300</td>
+      <td>150</td>
+      <td>78</td>
+    </tr>
+    <tr>
+      <td>Lahore</td>
+      <td>380</td>
+      <td>250</td>
+      <td>130</td>
+      <td>60</td>
+    </tr>
+    <tr>
+      <td>Islamabad</td>
+      <td>180</td>
+      <td>140</td>
+      <td>40</td>
+      <td>25</td>
+    </tr>
+  </table>
+
+  <div class="insight">
+    <p>📈 Cyber-crime cases have grown by <span style="color:#ff1a1a;">25%</span> in the last 6 months. Property theft has decreased slightly, while fraud remains stable. These trends highlight the need for improved digital surveillance and public awareness initiatives.</p>
+  </div>
+
+  <footer>
+    © 2025 Crime Investigation System | Statistics Module
+  </footer>
+
+</body>
+</html>

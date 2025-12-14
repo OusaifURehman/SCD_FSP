@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Crime Investigation System - Closed Cases</title>
+<style>
+  body {
+    margin: 0;
+    font-family: "Poppins", sans-serif;
+    background: linear-gradient(135deg, #000000, #1a1a1a);
+    color: white;
+    overflow-x: hidden;
+  }
+
+  header {
+    text-align: center;
+    padding: 40px 20px;
+    background: rgba(0, 255, 100, 0.08);
+    box-shadow: 0 0 20px rgba(0, 255, 100, 0.3);
+    animation: fadeIn 2s ease-in-out;
+  }
+
+  header h1 {
+    font-size: 40px;
+    color: #00ff66;
+    letter-spacing: 2px;
+    margin-bottom: 10px;
+  }
+
+  header p {
+    color: #ccc;
+    font-size: 18px;
+  }
+
+  /* Stats Section */
+  .stats {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 25px;
+    padding: 30px;
+  }
+
+  .stat-card {
+    background: rgba(25, 25, 25, 0.85);
+    border: 1px solid #00ff66;
+    border-radius: 15px;
+    width: 230px;
+    padding: 25px;
+    text-align: center;
+    box-shadow: 0 0 15px rgba(0, 255, 100, 0.3);
+    animation: slideUp 1.2s ease-in-out;
+    transition: transform 0.3s, box-shadow 0.3s;
+  }
+
+  .stat-card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 25px rgba(0, 255, 100, 0.6);
+  }
+
+  .stat-card h2 {
+    font-size: 35px;
+    color: #00ff66;
+    margin-bottom: 5px;
+  }
+
+  .stat-card p {
+    color: #ccc;
+    font-size: 16px;
+  }
+
+  /* Filter Section */
+  .filter-section {
+    text-align: center;
+    margin: 30px 0;
+    animation: fadeIn 2s ease-in-out;
+  }
+
+  input, select {
+    padding: 10px 15px;
+    border-radius: 8px;
+    border: none;
+    outline: none;
+    margin: 5px;
+    background: rgba(30, 30, 30, 0.8);
+    color: white;
+    border: 1px solid #00ff66;
+  }
+
+  input::placeholder {
+    color: #aaa;
+  }
+
+  /* Case Cards */
+  .case-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 25px;
+    padding: 30px;
+  }
+
+  .case-card {
+    background: rgba(20, 20, 20, 0.9);
+    border: 1px solid #00ff66;
+    border-radius: 15px;
+    width: 300px;
+    padding: 20px;
+    color: #ddd;
+    box-shadow: 0 0 20px rgba(0, 255, 100, 0.2);
+    transition: all 0.3s ease;
+    animation: slideUp 1.2s ease-in-out;
+  }
+
+  .case-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 0 30px rgba(0, 255, 100, 0.5);
+  }
+
+  .case-card h3 {
+    color: #00ff66;
+    font-size: 22px;
+    margin-bottom: 10px;
+  }
+
+  .case-card p {
+    margin: 5px 0;
+    font-size: 15px;
+  }
+
+  .status {
+    display: inline-block;
+    padding: 5px 10px;
+    border-radius: 8px;
+    background: rgba(0, 255, 100, 0.2);
+    color: #00ff88;
+    font-weight: bold;
+  }
+
+  /* Insight Section */
+  .insight {
+    width: 80%;
+    margin: 40px auto;
+    text-align: center;
+    font-size: 18px;
+    line-height: 1.6;
+    color: #ccc;
+    animation: fadeIn 2s ease-in-out;
+  }
+
+  /* Footer */
+  footer {
+    text-align: center;
+    padding: 15px;
+    background: rgba(0, 255, 100, 0.1);
+    color: #888;
+    font-size: 14px;
+  }
+
+  /* Animations */
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes slideUp {
+    from { transform: translateY(40px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+  }
+</style>
+</head>
+<body>
+
+  <header>
+    <h1>Closed Cases</h1>
+    <p>List of successfully solved and completed investigations.</p>
+  </header>
+
+  <section class="stats">
+    <div class="stat-card">
+      <h2>342</h2>
+      <p>Total Closed Cases</p>
+    </div>
+    <div class="stat-card">
+      <h2>89%</h2>
+      <p>Success Rate</p>
+    </div>
+    <div class="stat-card">
+      <h2>15</h2>
+      <p>Closed This Month</p>
+    </div>
+    <div class="stat-card">
+      <h2>42</h2>
+      <p>Convictions</p>
+    </div>
+  </section>
+
+  <section class="filter-section">
+    <input type="text" placeholder="Search by Case ID or City">
+    <select>
+      <option>All Crime Types</option>
+      <option>Theft</option>
+      <option>Murder</option>
+      <option>Cybercrime</option>
+      <option>Fraud</option>
+    </select>
+    <select>
+      <option>All Cities</option>
+      <option>Karachi</option>
+      <option>Lahore</option>
+      <option>Islamabad</option>
+    </select>
+  </section>
+
+  <section class="case-container">
+    <div class="case-card">
+      <h3>Case ID: C-2025-004</h3>
+      <p><strong>Crime Type:</strong> Fraud</p>
+      <p><strong>Location:</strong> Lahore</p>
+      <p><strong>Date Closed:</strong> 1 Oct 2025</p>
+      <p><strong>Investigator:</strong> Officer Ahmed</p>
+      <span class="status">Closed</span>
+    </div>
+
+    <div class="case-card">
+      <h3>Case ID: C-2025-009</h3>
+      <p><strong>Crime Type:</strong> Theft</p>
+      <p><strong>Location:</strong> Karachi</p>
+      <p><strong>Date Closed:</strong> 4 Oct 2025</p>
+      <p><strong>Investigator:</strong> Officer Sana</p>
+      <span class="status">Closed</span>
+    </div>
+
+    <div class="case-card">
+      <h3>Case ID: C-2025-017</h3>
+      <p><strong>Crime Type:</strong> Cybercrime</p>
+      <p><strong>Location:</strong> Islamabad</p>
+      <p><strong>Date Closed:</strong> 10 Oct 2025</p>
+      <p><strong>Investigator:</strong> Officer Bilal</p>
+      <span class="status">Closed</span>
+    </div>
+  </section>
+
+  <div class="insight">
+    <p>The department achieved an impressive <span style="color:#00ff66;">89%</span> case closure rate this year. Fraud and theft cases were resolved faster than average, thanks to improved surveillance and digital tracking technologies.</p>
+  </div>
+
+  <footer>
+    © 2025 Crime Investigation System | Closed Cases Module
+  </footer>
+
+</body>
+</html>

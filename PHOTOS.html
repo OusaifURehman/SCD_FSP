@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Evidence Details - Crime Investigation System</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background-color: #0d0d0d;
+      color: #f2f2f2;
+    }
+
+    h1 {
+      text-align: center;
+      color: #e60000;
+      margin-top: 30px;
+    }
+
+    p.subtitle {
+      text-align: center;
+      color: #ccc;
+      font-style: italic;
+      margin-bottom: 40px;
+    }
+
+    .evidence-section {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 25px 40px; /* reduced from 40px 60px */
+      background-color: #1a1a1a;
+      border: 2px solid #e60000;
+      border-radius: 15px; /* slightly smaller corners */
+      margin: 20px auto; /* reduced spacing between boxes */
+      width: 70%; /* reduced from 80% */
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .evidence-section:hover {
+      transform: scale(1.02);
+      box-shadow: 0 0 20px #e60000;
+    }
+
+    .evidence-section img {
+      width: 40%; /* smaller image width */
+      height: 220px; /* reduced from 300px */
+      border-radius: 10px;
+      object-fit: cover;
+      border: 2px solid #e60000;
+    }
+
+    .evidence-info {
+      width: 55%; /* adjusted for new image width */
+    }
+
+    .evidence-info h2 {
+      color: #ff3333;
+      margin-bottom: 8px;
+      font-size: 18px; /* slightly smaller title */
+    }
+
+    .evidence-info p {
+      color: #ccc;
+      line-height: 1.5;
+      font-size: 14px; /* slightly smaller text */
+    }
+
+    /* Alternate layout */
+    .reverse {
+      flex-direction: row-reverse;
+    }
+
+    @media (max-width: 768px) {
+      .evidence-section, .reverse {
+        flex-direction: column;
+        text-align: center;
+      }
+      .evidence-section img {
+        width: 100%;
+        height: 200px;
+        margin-bottom: 15px;
+      }
+      .evidence-info {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Evidence Records</h1>
+  <p class="subtitle">“Every piece tells a story — uncovering truth through evidence.”</p>
+
+  <!-- Evidence 1 -->
+  <div class="evidence-section">
+    <img src="evi1.jpeg" alt="Bloody Knife">
+    <div class="evidence-info">
+      <h2>Case: Downtown Homicide</h2>
+      <p><b>Collected by:</b> Inspector Ahmed Khan</p>
+      <p><b>Evidence Type:</b> Weapon</p>
+      <p><b>Description:</b> A bloody knife recovered from the crime scene. Date: March 22, 2025.</p>
+    </div>
+  </div>
+
+  <!-- Evidence 2 -->
+  <div class="evidence-section reverse">
+    <img src="evi2.jpeg" alt="CCTV Footage">
+    <div class="evidence-info">
+      <h2>Case: Bank Robbery</h2>
+      <p><b>Collected by:</b> SI Sara Ali</p>
+      <p><b>Evidence Type:</b> CCTV Footage</p>
+      <p><b>Description:</b> Image captured from surveillance camera during the robbery. Date: April 10, 2025.</p>
+    </div>
+  </div>
+
+  <!-- Evidence 3 -->
+  <div class="evidence-section">
+    <img src="evi3.jpeg" alt="Digital Evidence">
+    <div class="evidence-info">
+      <h2>Case: Cyber Fraud</h2>
+      <p><b>Collected by:</b> SI Nadia Khan</p>
+      <p><b>Evidence Type:</b> Digital Logs</p>
+      <p><b>Description:</b> Screenshot of fake transaction records traced to suspect. Date: Feb 12, 2025.</p>
+    </div>
+  </div>
+
+  <!-- Evidence 4 -->
+  <div class="evidence-section reverse">
+    <img src="evi4.jpeg" alt="Vehicle Photo">
+    <div class="evidence-info">
+      <h2>Case: Kidnapping</h2>
+      <p><b>Collected by:</b> Constable Kiran</p>
+      <p><b>Evidence Type:</b> Vehicle</p>
+      <p><b>Description:</b> Vehicle used in kidnapping captured by nearby CCTV. Date: Jan 5, 2025.</p>
+    </div>
+  </div>
+
+</body>
+</html>

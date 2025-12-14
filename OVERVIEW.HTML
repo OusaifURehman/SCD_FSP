@@ -1,0 +1,295 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>FOAM INVESTIGATORS — Dashboard Overview</title>
+  <style>
+    :root{
+      --bg:#070708;
+      --card:#0f0f10;
+      --muted:#bdbdbd;
+      --accent:#ff2b2b;
+      --accent-dark:#8b0000;
+      --glass: rgba(255,255,255,0.03);
+      --glass-2: rgba(255,0,0,0.06);
+      font-family: 'Poppins', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+    }
+
+    *{box-sizing:border-box}
+
+    html,body{height:100%}
+    body{
+      margin:0;
+      min-height:100vh;
+      background: linear-gradient(180deg, rgba(8,8,10,0.98), rgba(4,4,6,0.98)), url('overbg.jpeg') center/cover fixed no-repeat;
+      color:#eee;
+      -webkit-font-smoothing:antialiased;
+      display:flex;
+      gap:24px;
+    }
+
+    /* SIDEBAR */
+    .sidebar{
+      width:260px;
+      background:linear-gradient(180deg, rgba(10,10,12,0.92), rgba(6,6,8,0.92));
+      border-right: 1px solid rgba(255,0,0,0.06);
+      padding:28px 20px;
+      display:flex;
+      flex-direction:column;
+      gap:22px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+    }
+    .brand{
+      display:flex;
+      gap:12px;
+      align-items:center;
+    }
+    .logo-mark{
+      width:46px;height:46px;border-radius:10px;
+      background:linear-gradient(135deg,var(--accent),var(--accent-dark));
+      display:flex;align-items:center;justify-content:center;font-weight:700;color:white;
+      box-shadow:0 6px 18px rgba(255,0,0,0.18), inset 0 -4px 10px rgba(0,0,0,0.25);
+    }
+    .brand h1{font-size:16px;margin:0;color:var(--accent);letter-spacing:1px}
+    .brand p{margin:0;font-size:12px;color:var(--muted)}
+
+    nav.side-menu{display:flex;flex-direction:column;gap:8px}
+    a.menu-item{
+      display:flex;align-items:center;gap:12px;padding:10px 12px;border-radius:10px;color:#ddd;text-decoration:none;
+      transition:all .18s ease;
+    }
+    a.menu-item:hover{background:rgba(255,0,0,0.06);transform:translateX(6px);color:white}
+    a.menu-item .dot{width:10px;height:10px;border-radius:50%;background:rgba(255,255,255,0.06)}
+
+    .sidebar .quick-stats{margin-top:auto;padding-top:10px;border-top:1px dashed rgba(255,0,0,0.03)}
+    .stat-line{display:flex;justify-content:space-between;font-size:13px;color:var(--muted);margin:6px 0}
+    .stat-line strong{color:#fff}
+
+    /* MAIN AREA */
+    .main{
+      flex:1;
+      padding:28px;
+      overflow:auto;
+      display:flex;
+      flex-direction:column;
+      gap:22px;
+    }
+
+    header.topbar{
+      display:flex;align-items:center;justify-content:space-between;
+      gap:18px;
+    }
+    .search{
+      flex:1;
+      max-width:640px;
+      display:flex;align-items:center;gap:12px;background:var(--glass);padding:10px 14px;border-radius:12px;border:1px solid rgba(255,0,0,0.04)
+    }
+    .search input{
+      background:transparent;border:0;outline:none;color:#eee;font-size:14px;width:100%;
+    }
+    .top-actions{display:flex;gap:12px;align-items:center}
+    .btn{
+      background:linear-gradient(90deg,var(--accent),var(--accent-dark));
+      border:0;padding:9px 14px;border-radius:10px;color:white;font-weight:600;cursor:pointer;box-shadow:0 8px 30px rgba(255,0,0,0.12)
+    }
+    .chip{padding:6px 10px;background:rgba(255,255,255,0.03);border-radius:10px;border:1px solid rgba(255,255,255,0.02);font-size:13px;color:var(--muted)}
+
+    /* HERO STATS */
+    .hero{
+      display:flex;gap:18px;align-items:stretch;
+    }
+    .cards{display:flex;gap:12px;flex:1;flex-wrap:wrap}
+    .card{
+      background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.12));
+      border-radius:12px;padding:18px;width:220px;min-height:96px;border:1px solid rgba(255,0,0,0.04);
+      box-shadow:0 8px 20px rgba(0,0,0,0.5);
+    }
+    .card h4{margin:0;color:var(--muted);font-size:13px}
+    .card .num{font-size:24px;margin-top:8px;font-weight:700;color:white}
+
+    .overview-panel{
+      flex-basis:420px;background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(0,0,0,0.08));border-radius:12px;padding:16px;border:1px solid rgba(255,0,0,0.045);
+      display:flex;flex-direction:column;gap:12px;
+    }
+    .overview-panel h3{margin:0;color:var(--accent)}
+    .mini-rows{display:flex;gap:10px;flex-wrap:wrap}
+    .mini{background:var(--card);padding:10px;border-radius:10px;flex:1;min-width:120px;border:1px solid rgba(255,255,255,0.02)}
+    .mini small{display:block;color:var(--muted);font-size:12px}
+    .mini strong{display:block;color:#fff;font-size:16px;margin-top:6px}
+
+    /* GRID: Charts + Table */
+    .grid{
+      display:grid;
+      grid-template-columns: 1.25fr 0.75fr;
+      gap:18px;
+      align-items:start;
+    }
+
+    .panel{
+      background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(0,0,0,0.06));
+      border-radius:12px;padding:16px;border:1px solid rgba(255,0,0,0.04);
+      box-shadow:0 10px 30px rgba(0,0,0,0.45);
+    }
+
+    .panel h3{margin:0 0 12px 0;color:var(--accent)}
+    .chart{
+      height:260px;border-radius:10px;overflow:hidden;background:linear-gradient(90deg, rgba(0,0,0,0.08), rgba(5,5,6,0.12));
+      display:flex;align-items:center;justify-content:center;
+    }
+    .chart img{width:100%;height:100%;object-fit:cover;display:block}
+
+    table{width:100%;border-collapse:collapse;color:#ddd;font-size:14px}
+    thead th{font-size:12px;color:var(--muted);text-align:left;padding:8px 6px;border-bottom:1px solid rgba(255,255,255,0.03)}
+    tbody td{padding:10px 6px;border-bottom:1px solid rgba(255,255,255,0.03)}
+    tbody tr:hover{background:linear-gradient(90deg, rgba(255,0,0,0.03), rgba(255,0,0,0.02))}
+
+    /* ACTIVITY / NOTIFICATIONS */
+    .activity-list{display:flex;flex-direction:column;gap:10px}
+    .activity{
+      background:rgba(255,255,255,0.02);padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,0.02);font-size:14px;color:var(--muted);
+      display:flex;gap:12px;align-items:center;
+    }
+    .activity strong{color:#fff}
+
+    footer{padding:18px;text-align:center;color:var(--muted);font-size:13px;margin-top:8px}
+    /* responsive */
+    @media (max-width:1000px){
+      .sidebar{display:none}
+      .grid{grid-template-columns:1fr}
+      .hero{flex-direction:column}
+      .overview-panel{order:2}
+      body{padding:12px}
+    }
+  </style>
+</head>
+<body>
+  <aside class="sidebar" aria-label="Sidebar">
+    <div class="brand">
+      <div class="logo-mark">FI</div>
+      <div>
+        <h1>FOAM INVESTIGATORS</h1>
+        <p>Crime Investigation System</p>
+      </div>
+    </div>
+
+    <nav class="side-menu" aria-label="Main navigation">
+      <a class="menu-item" href="#"><span class="dot" style="background:var(--accent)"></span> Overview</a>
+
+    </nav>
+
+    <div class="quick-stats" aria-hidden="true">
+      <div class="stat-line"><span>Active cases</span><strong>280</strong></div>
+      <div class="stat-line"><span>Solved</span><strong>865</strong></div>
+      <div class="stat-line"><span>Pending</span><strong>100</strong></div>
+    </div>
+  </aside>
+
+  <main class="main">
+    <header class="topbar">
+      <div style="display:flex;gap:14px;align-items:center;width:100%">
+        <div class="search" role="search" aria-label="Search cases">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" style="opacity:.9"><path d="M21 21l-4.35-4.35" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+          <input placeholder="Search cases, officers, FIRs..." />
+        </div>
+        <div class="top-actions">
+          <div class="chip">Karachi</div>
+          <button class="btn">New Case</button>
+        </div>
+      </div>
+    </header>
+
+    <!-- HERO STATS -->
+    <section class="hero">
+      <div class="cards" aria-label="Summary cards">
+        <div class="card">
+          <h4>Total Cases</h4>
+          <div class="num">1,245</div>
+          <div style="color:var(--muted);font-size:12px;margin-top:8px">Registered</div>
+        </div>
+        <div class="card">
+          <h4>Solved Cases</h4>
+          <div class="num">865</div>
+          <div style="color:var(--muted);font-size:12px;margin-top:8px">Completed</div>
+        </div>
+        <div class="card">
+          <h4>Ongoing Investigations</h4>
+          <div class="num">280</div>
+          <div style="color:var(--muted);font-size:12px;margin-top:8px">Active</div>
+        </div>
+        <div class="card">
+          <h4>Pending Reports</h4>
+          <div class="num">100</div>
+          <div style="color:var(--muted);font-size:12px;margin-top:8px">Awaiting Review</div>
+        </div>
+      </div>
+
+      <aside class="overview-panel" aria-label="Overview panel">
+        <h3>Quick Overview</h3>
+        <div class="mini-rows">
+          <div class="mini"><small>New This Week</small><strong>24</strong></div>
+          <div class="mini"><small>Avg. Closure</small><strong>12 days</strong></div>
+          <div class="mini"><small>Top Officer</small><strong>Officer Ali</strong></div>
+        </div>
+        <div style="margin-top:6px;color:var(--muted);font-size:13px">Latest: <strong style="color:#fff">Case #002</strong> — Evidence updated</div>
+      </aside>
+    </section>
+
+    <!-- GRID -->
+    <section class="grid">
+      <div class="panel">
+        <h3>Crime Type Distribution</h3>
+        <div class="chart" aria-hidden="true">
+          <!-- uses your image file -->
+          <img src="crime-chart2.jpeg" alt="Crime type distribution chart" />
+        </div>
+
+        <div style="display:flex;gap:12px;margin-top:14px;align-items:center;flex-wrap:wrap">
+          <div style="flex:1;min-width:220px">
+            <h3 style="font-size:15px;margin-bottom:8px;color:var(--muted)">Recent Case Activity</h3>
+            <table aria-label="Recent cases">
+              <thead>
+                <tr><th>Case ID</th><th>Title</th><th>Status</th><th>Officer</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>001</td><td>Bank Robbery</td><td>Solved</td><td>Officer Ali</td></tr>
+                <tr><td>002</td><td>Cyber Fraud</td><td>Ongoing</td><td>Officer Sara</td></tr>
+                <tr><td>003</td><td>Kidnapping</td><td>Pending</td><td>Officer Hamza</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div style="width:220px;min-width:180px">
+            <h3 style="font-size:15px;margin-bottom:8px;color:var(--muted)">Cases by Region</h3>
+            <div class="chart" style="height:120px">
+              <img src="crime-chart1.jpeg" alt="Cases by region chart" />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel">
+        <h3>Latest Notifications</h3>
+        <div class="activity-list" role="log" aria-live="polite" style="margin-top:10px">
+          <div class="activity">🚨 <strong>New case</strong> filed in Karachi region.</div>
+          <div class="activity">📁 <strong>2 new evidences</strong> added to Case #002.</div>
+          <div class="activity">🕵️ <strong>Officer Ali</strong> closed Case #001 successfully.</div>
+          <div class="activity">⚠️ <strong>5 reports</strong> pending verification.</div>
+        </div>
+
+        <h3 style="margin-top:18px">Evidence Previews</h3>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:8px">
+          <img src="evi11.jpeg" alt="evidence preview" style="width:100%;height:98px;object-fit:cover;border-radius:8px" />
+          <img src="cs.jpg" alt="case preview" style="width:100%;height:98px;object-fit:cover;border-radius:8px" />
+          <img src="fir11.jpeg" alt="fir preview" style="width:100%;height:98px;object-fit:cover;border-radius:8px" />
+          <img src="cs2.jpg" alt="investigator preview" style="width:100%;height:98px;object-fit:cover;border-radius:8px" />
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      © 2025 FOAM INVESTIGATORS — Crime Investigation System • Built for clarity & fast decisions
+    </footer>
+  </main>
+</body>
+</html>

@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Evidence Records - Crime Investigation System</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background-color: #0b0b0b;
+      color: #f5f5f5;
+      background: url(evi-bg.jpeg) no-repeat center center fixed;
+  background-size: cover;
+    }
+
+    header {
+      text-align: center;
+      padding: 50px 10px;
+      background: linear-gradient(90deg, #1a0000, #330000, #1a0000);
+      border-bottom: 2px solid #ff0000;
+      box-shadow: 0 0 25px #ff000055;
+    }
+
+    header h1 {
+      font-size: 3rem;
+      color: #ff3333;
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      text-shadow: 0 0 20px #ff0000;
+    }
+
+    header p {
+      color: #ffb3b3;
+      letter-spacing: 1px;
+      font-size: 1rem;
+    }
+
+    .evidence-section {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 40px;
+      padding: 60px 10%;
+      border-bottom: 1px solid #330000;
+    }
+
+    .evidence-section:nth-child(even) {
+      flex-direction: row-reverse;
+      background: rgba(255, 0, 0, 0.05);
+    }
+
+    .evidence-img {
+      flex: 1;
+      max-width: 45%;
+      border-radius: 15px;
+      overflow: hidden;
+      box-shadow: 0 0 25px rgba(255, 0, 0, 0.3);
+      transition: transform 0.3s ease;
+    }
+
+    .evidence-img:hover {
+      transform: scale(1.05);
+    }
+
+    .evidence-img img {
+      width: 100%;
+      height: 300px;
+      object-fit: cover;
+      border-radius: 15px;
+      filter: brightness(80%) contrast(110%);
+      transition: 0.4s;
+    }
+
+    .evidence-img:hover img {
+      filter: brightness(100%) contrast(120%);
+    }
+
+    .evidence-info {
+      flex: 1;
+      background: rgba(20, 0, 0, 0.6);
+      padding: 25px 30px;
+      border-radius: 15px;
+      border-left: 3px solid #ff0000;
+      box-shadow: 0 0 20px rgba(255, 0, 0, 0.2);
+    }
+
+    .evidence-info h2 {
+      color: #ff3333;
+      text-transform: uppercase;
+      font-size: 1.4rem;
+      margin-bottom: 10px;
+      text-shadow: 0 0 10px #ff0000;
+    }
+
+    .evidence-info p {
+      color: #ffcccc;
+      line-height: 1.6;
+      font-size: 15px;
+    }
+
+    footer {
+      text-align: center;
+      padding: 25px;
+      color: #999;
+      background-color: #1a0000;
+      border-top: 1px solid #ff0000;
+      font-size: 14px;
+    }
+
+    @media (max-width: 900px) {
+      .evidence-section {
+        flex-direction: column;
+        text-align: center;
+      }
+
+      .evidence-img,
+      .evidence-info {
+        max-width: 100%;
+      }
+
+      .evidence-info {
+        border-left: none;
+        border-top: 3px solid #ff0000;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <h1>Evidence Records</h1>
+    <p>All Collected Forensic Proofs & Case Clues</p>
+  </header>
+
+  <!-- EVIDENCES -->
+  <section class="evidence-section">
+    <div class="evidence-img"><img src="evi8.jpeg" alt=""></div>
+    <div class="evidence-info">
+      <h2>Bloody Knife</h2>
+      <p>The knife was discovered on the kitchen floor, partially covered in dried blood. Forensic testing confirmed the
+        DNA traces belonged to the victim, while faint fingerprints suggest the suspect handled it before wiping the
+        surface.</p>
+    </div>
+  </section>
+
+  <section class="evidence-section">
+    <div class="evidence-img"><img src="evi2.jpeg" alt=""></div>
+    <div class="evidence-info">
+      <h2>Blood Sample</h2>
+      <p>A small pool of blood was collected from the living room carpet near the victim’s body. Initial tests confirmed
+        it was human blood. DNA profiling revealed a mixed sample, indicating possible contact between the victim and
+        another individual before death.</p>
+    </div>
+  </section>
+
+  <section class="evidence-section">
+    <div class="evidence-img"><img src="evi3.jpeg" alt=""></div>
+    <div class="evidence-info">
+      <h2>Murderer photos</h2>
+      <p>CCTV frame captured a hooded male leaving the alleyway at 02:47 AM. Individual appears to be 5'9"–5'11", medium
+        build, wearing a dark hooded jacket and light-coloured sneakers.</p>
+    </div>
+  </section>
+
+  <section class="evidence-section">
+    <div class="evidence-img"><img src="evi4.jpeg" alt=""></div>
+    <div class="evidence-info">
+      <h2>CCTV Footage</h2>
+      <p>Captured image shows a masked man entering alley moments before attack. Surveillance video obtained from a
+        nearby street camera shows a shadowy figure exiting the alley at 02:45 AM, approximately two minutes after the
+        crime took place.</p>
+    </div>
+  </section>
+
+  <section class="evidence-section">
+    <div class="evidence-img"><img src="evi5.jpeg" alt=""></div>
+    <div class="evidence-info">
+      <h2>Blood Sample</h2>
+      <p>A small bloodstain was discovered near the victim’s head, partially absorbed into the carpet fibers. Laboratory
+        tests confirmed human origin. Preliminary DNA results match the victim, but a secondary, unidentified DNA
+        pattern was detected</p>
+    </div>
+  </section>
+
+  <section class="evidence-section">
+    <div class="evidence-img"><img src="evi6.jpeg" alt=""></div>
+    <div class="evidence-info">
+      <h2>Footprint Cast</h2>
+      <p>A single right-foot impression was discovered approximately 15 meters from the victim’s body, embedded in wet
+        soil. Investigators created a plaster cast to preserve its dimensions and tread pattern.</p>
+    </div>
+  </section>
+
+  <section class="evidence-section">
+    <div class="evidence-img"><img src="evi7.jpeg" alt=""></div>
+    <div class="evidence-info">
+      <h2>Victim’s Cell Phone</h2>
+      <p>The victim’s smartphone was discovered beneath a broken chair near the scene. The device was partially damaged
+        but still functional upon retrieval. Forensic examination revealed multiple missed calls and one unsent message
+      </p>
+    </div>
+  </section>
+
+  <section class="evidence-section">
+    <div class="evidence-img"><img src="evi8.jpeg" alt=""></div>
+    <div class="evidence-info">
+      <h2>Suspect’s Car Photo</h2>
+      <p>Car captured on traffic camera leaving the scene 5 mins after incident.</p>
+    </div>
+  </section>
+
+  <section class="evidence-section">
+    <div class="evidence-img"><img src="evi9.jpeg" alt=""></div>
+    <div class="evidence-info">
+      <h2>Broken Glass</h2>
+      <p>Collected from entrance, showing forced entry marks and blood stains.</p>
+    </div>
+  </section>
+
+  <section class="evidence-section">
+    <div class="evidence-img"><img src="evi10.jpeg" alt=""></div>
+    <div class="evidence-info">
+      <h2>Pistol (Murder Weapon)</h2>
+      <p>9mm handgun recovered under suspect’s bed with matching bullet casings.</p>
+    </div>
+  </section>
+
+  <section class="evidence-section">
+    <div class="evidence-img"><img src="evi11.jpeg" alt=""></div>
+    <div class="evidence-info">
+      <h2>Blood Stains on Rug</h2>
+      <p>Dark stains matching victim’s blood group found near living area.</p>
+    </div>
+  </section>
+
+  <section class="evidence-section">
+    <div class="evidence-img"><img src="evi12.jpeg" alt=""></div>
+    <div class="evidence-info">
+      <h2>Threat Note</h2>
+      <p>Handwritten message warning the victim a day before disappearance.</p>
+    </div>
+  </section>
+
+  <section class="evidence-section">
+    <div class="evidence-img"><img src="evi13.jpeg" alt=""></div>
+    <div class="evidence-info">
+      <h2>Suspect’s Wallet</h2>
+      <p>Found near crime scene containing victim’s missing credit card.</p>
+    </div>
+  </section>
+
+  <section class="evidence-section">
+    <div class="evidence-img"><img src="evi14.jpeg" alt=""></div>
+    <div class="evidence-info">
+      <h2>Evidence Bag - Exhibit A12</h2>
+      <p>Labeled and sealed with contents linked to secondary suspect.</p>
+    </div>
+  </section>
+
+  <section class="evidence-section">
+    <div class="evidence-img"><img src="evi6.jpeg" alt=""></div>
+    <div class="evidence-info">
+      <h2>Torn Fabric</h2>
+      <p>Piece of coat fabric recovered from fence, matches victim’s jacket.</p>
+    </div>
+  </section>
+
+  <section class="evidence-section">
+    <div class="evidence-img"><img src="evi5.jpeg" alt=""></div>
+    <div class="evidence-info">
+      <h2>Bloodied Footprint</h2>
+      <p>Visible trail leading away from crime scene towards alley corner.</p>
+    </div>
+  </section>
+
+  <section class="evidence-section">
+    <div class="evidence-img"><img src="evi4.jpeg" alt=""></div>
+    <div class="evidence-info">
+      <h2>Knife Handle</h2>
+      <p>Broken handle part found 3 meters from crime scene indicating struggle.</p>
+    </div>
+  </section>
+
+  <section class="evidence-section">
+    <div class="evidence-img"><img src="evi3.jpeg" alt=""></div>
+    <div class="evidence-info">
+      <h2>Vehicle Tire Marks</h2>
+      <p>Distinct tire impressions recorded from nearby mud patch.</p>
+    </div>
+  </section>
+
+  <section class="evidence-section">
+    <div class="evidence-img"><img src="evi2.jpeg" alt=""></div>
+    <div class="evidence-info">
+      <h2>Recovered Gun Magazine</h2>
+      <p>Partially loaded magazine recovered from garbage bin behind store.</p>
+    </div>
+  </section>
+
+  <section class="evidence-section">
+    <div class="evidence-img"><img src="evi1.jpeg" alt=""></div>
+    <div class="evidence-info">
+      <h2>Forensic DNA Report</h2>
+      <p>Confirmed DNA match between primary suspect and blood on weapon.</p>
+    </div>
+  </section>
+
+  <footer>
+    &copy; 2025 Crime Investigation System | All Rights Reserved
+  </footer>
+
+</body>
+
+</html>

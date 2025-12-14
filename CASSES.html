@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Crime Investigation System – Open Cases</title>
+  <style>
+    /* ===== RESET & BASE ===== */
+    *, *::before, *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+    html {
+      font-size: 16px;
+    }
+    body {
+      background: linear-gradient(135deg, #000000, #1a1a1a);
+      color: #e0e0e0;
+      min-height: 100vh;
+      overflow-x: hidden;
+      line-height: 1.5;
+      background: url('BGG.JPEG') no-repeat center center fixed;
+      background-size: cover;
+        background: url(open-bg.jpeg) no-repeat center center fixed;
+  background-size: cover;
+    }
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    /* ===== HEADER ===== */
+    header {
+      text-align: center;
+      padding: 3rem 1rem;
+      background: rgba(255,0,0,0.1);
+      box-shadow: 0 0 20px rgba(255,0,0,0.4);
+      animation: fadeIn 1.5s ease-in-out;
+    }
+    header h1 {
+      font-size: 2.5rem;
+      color: #ff1a1a;
+      letter-spacing: 2px;
+      margin-bottom: 0.5rem;
+    }
+    header p {
+      color: #ccc;
+      font-size: 1.1rem;
+    }
+
+    /* ===== STAT CARDS ===== */
+    .stats {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 25px;
+      padding: 2rem 1rem;
+    }
+    .stat-card {
+      background: rgba(25,25,25,0.9);
+      border: 1px solid #ff1a1a;
+      border-radius: 12px;
+      width: 230px;
+      padding: 2rem 1rem;
+      text-align: center;
+      box-shadow: 0 0 15px rgba(255,0,0,0.3);
+      transition: transform 0.3s, box-shadow 0.3s;
+      animation: slideUp 1.2s ease-in-out;
+    }
+    .stat-card:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 25px rgba(255,0,0,0.6);
+    }
+    .stat-card h2 {
+      font-size: 2.6rem;
+      color: #ff1a1a;
+      margin-bottom: 0.5rem;
+    }
+    .stat-card p {
+      font-size: 1rem;
+      color: #ccc;
+    }
+
+    /* ===== FILTER / SEARCH SECTION ===== */
+    .filter-section {
+      text-align: center;
+      padding: 1.5rem 1rem;
+      animation: fadeIn 1.5s ease-in-out;
+    }
+    .filter-section input,
+    .filter-section select {
+      padding: 0.9rem 1.2rem;
+      margin: 0.5rem;
+      border-radius: 8px;
+      border: 1px solid #ff1a1a;
+      background: rgba(30,30,30,0.8);
+      color: #fff;
+      font-size: 1rem;
+      outline: none;
+    }
+    .filter-section input::placeholder {
+      color: #aaa;
+    }
+
+    /* ===== CASE CARDS SECTION ===== */
+    .case-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 25px;
+      padding: 2rem 1rem;
+    }
+    .case-card {
+      background: rgba(20,20,20,0.9);
+      border: 1px solid #ff1a1a;
+      border-radius: 12px;
+      width: 300px;
+      padding: 1.8rem 1rem;
+      color: #ddd;
+      box-shadow: 0 0 20px rgba(255,0,0,0.2);
+      transition: transform 0.3s, box-shadow 0.3s;
+      animation: slideUp 1.2s ease-in-out;
+    }
+    .case-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 0 30px rgba(255,0,0,0.5);
+    }
+    .case-card h3 {
+      color: #ff1a1a;
+      font-size: 1.4rem;
+      margin-bottom: 0.8rem;
+    }
+    .case-card p {
+      margin: 0.5rem 0;
+      font-size: 0.95rem;
+    }
+    .status {
+      display: inline-block;
+      padding: 6px 12px;
+      border-radius: 8px;
+      background: rgba(255,26,26,0.2);
+      color: #ff4d4d;
+      font-weight: bold;
+      font-size: 0.9rem;
+      margin-top: 0.8rem;
+    }
+
+    /* ===== INSIGHT TEXT ===== */
+    .insight {
+      max-width: 800px;
+      margin: 3rem auto;
+      text-align: center;
+      font-size: 1.1rem;
+      color: #ccc;
+      line-height: 1.6;
+      background: rgba(30,30,30,0.8);
+      padding: 2rem 1rem;
+      border-radius: 12px;
+      box-shadow: 0 0 20px rgba(255,0,0,0.4);
+      animation: fadeIn 2s ease-in-out;
+    }
+
+    /* ===== FOOTER ===== */
+    footer {
+      text-align: center;
+      padding: 2rem 1rem;
+      background: rgba(255,0,0,0.1);
+      color: #888;
+      font-size: 0.9rem;
+      margin-top: 4rem;
+    }
+
+    /* ===== ANIMATIONS ===== */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes slideUp {
+      from { opacity: 0; transform: translateY(40px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 768px) {
+      header h1 { font-size: 2.0rem; }
+      .stats { flex-direction: column; align-items: center; padding: 1rem 0; }
+      .case-container { flex-direction: column; align-items: center; }
+      .case-card { width: 90%; }
+      .filter-section input, .filter-section select { width: 90%; max-width: 300px; }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Open Cases</h1>
+    <p>Review all ongoing investigations currently under action.</p>
+  </header>
+
+  <section class="stats">
+    <div class="stat-card">
+      <h2>56</h2>
+      <p>Total Open Cases</p>
+    </div>
+    <div class="stat-card">
+      <h2>12</h2>
+      <p>High Priority</p>
+    </div>
+    <div class="stat-card">
+      <h2>8</h2>
+      <p>Reported This Week</p>
+    </div>
+    <div class="stat-card">
+      <h2>24</h2>
+      <p>Assigned Officers</p>
+    </div>
+  </section>
+
+  <section class="filter-section">
+    <input type="text" placeholder="Search by Case ID or City">
+    <select>
+      <option>All Crime Types</option>
+      <option>Theft</option>
+      <option>Murder</option>
+      <option>Cybercrime</option>
+      <option>Fraud</option>
+    </select>
+    <select>
+      <option>All Cities</option>
+      <option>Karachi</option>
+      <option>Lahore</option>
+      <option>Islamabad</option>
+    </select>
+  </section>
+
+  <section class="case-container">
+    <div class="case-card">
+      <h3>Case ID: C-2025-014</h3>
+      <p><strong>Crime Type:</strong> Cybercrime</p>
+      <p><strong>Location:</strong> Karachi</p>
+      <p><strong>Date Reported:</strong> 5 Oct 2025</p>
+      <p><strong>Investigator:</strong> Officer Ali</p>
+      <span class="status">Under Investigation</span>
+    </div>
+
+    <div class="case-card">
+      <h3>Case ID: C-2025-027</h3>
+      <p><strong>Crime Type:</strong> Robbery</p>
+      <p><strong>Location:</strong> Lahore</p>
+      <p><strong>Date Reported:</strong> 2 Oct 2025</p>
+      <p><strong>Investigator:</strong> Officer Sara</p>
+      <span class="status">Under Investigation</span>
+    </div>
+
+    <div class="case-card">
+      <h3>Case ID: C-2025-033</h3>
+      <p><strong>Crime Type:</strong> Fraud</p>
+      <p><strong>Location:</strong> Islamabad</p>
+      <p><strong>Date Reported:</strong> 9 Oct 2025</p>
+      <p><strong>Investigator:</strong> Officer Rizwan</p>
+      <span class="status">Under Investigation</span>
+    </div>
+
+    <!-- Add more case-cards as needed -->
+  </section>
+
+  <div class="insight">
+    <p>Cybercrime continues to dominate the list of open cases, particularly in Karachi. Robbery and fraud trends remain high in Lahore and Islamabad respectively. Prioritised alerts have been issued for multiple districts across the region.</p>
+  </div>
+
+  <footer>
+    © 2025 Crime Investigation System | Open Cases Module
+  </footer>
+
+</body>
+</html>

@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Animated Intro & Login/Signup</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Poppins", sans-serif;
+    }
+
+    /* ==== INTRO SCREEN (logo + fire/water animation) ==== */
+    #logoIntro {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: #000;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+      z-index: 9999;
+    }
+
+    #logoIntro img {
+      width: 250px;
+      animation: burnPulse 3s ease-in-out infinite alternate,
+        waterFlow 6s ease-in-out infinite alternate;
+      filter: drop-shadow(0 0 40px #ff2200);
+    }
+
+    @keyframes burnPulse {
+      0% {
+        transform: scale(1);
+        filter: drop-shadow(0 0 20px #ff3300);
+      }
+
+      50% {
+        transform: scale(1.1);
+        filter: drop-shadow(0 0 60px #ff1100);
+      }
+
+      100% {
+        transform: scale(1);
+        filter: drop-shadow(0 0 40px #ff0000);
+      }
+    }
+
+    @keyframes waterFlow {
+      0% {
+        transform: translateY(0px) skewX(0deg);
+      }
+
+      50% {
+        transform: translateY(-10px) skewX(2deg);
+      }
+
+      100% {
+        transform: translateY(0px) skewX(0deg);
+      }
+    }
+
+    .fade-out {
+      opacity: 0;
+      transition: opacity 1s ease-out;
+    }
+
+    /* ==== MAIN LOGIN/SIGNUP PAGE ==== */
+    body {
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: url('login pic.JPEG') no-repeat center center/cover;
+      position: relative;
+      overflow: hidden;
+    }
+
+    body::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.6);
+      z-index: 0;
+    }
+
+    .main-wrapper {
+      position: relative;
+      z-index: 2;
+      width: 720px;
+      overflow: hidden;
+      border-radius: 20px;
+      box-shadow: 0 0 30px rgba(255, 0, 0, 0.4);
+      background: rgba(20, 20, 20, 0.85);
+      backdrop-filter: blur(15px);
+      display: none;
+      /* hidden until intro ends */
+    }
+
+    .form-container {
+      width: 100%;
+      padding: 2rem 2.5rem;
+      color: #fff;
+      position: absolute;
+      top: 0;
+      left: 0;
+      transition: all .8s ease;
+      opacity: 0;
+      transform: translateX(100%);
+      display: none;
+    }
+
+    .form-container.active {
+      opacity: 1;
+      transform: translateX(0);
+      position: relative;
+      display: block;
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 1.5rem;
+      color: #ff3b3b;
+      text-shadow: 0 0 12px #ff0000;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.2rem 1.5rem;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .form-group.full-width {
+      grid-column: span 2;
+    }
+
+    label {
+      margin-bottom: 0.3rem;
+      font-size: 14px;
+      color: #ffb3b3;
+    }
+
+    input,
+    select,
+    textarea {
+      width: 100%;
+      padding: 0.6rem;
+      border: none;
+      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.1);
+      color: #fff;
+      outline: none;
+      transition: 0.3s;
+    }
+
+    input:focus,
+    select:focus,
+    textarea:focus {
+      background: rgba(255, 255, 255, 0.2);
+      box-shadow: 0 0 10px #ff3b3b;
+    }
+
+    .btn {
+      grid-column: span 2;
+      padding: 0.9rem;
+      background: #ff3b3b;
+      border: none;
+      border-radius: 10px;
+      color: #fff;
+      font-weight: bold;
+      font-size: 16px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .btn:hover {
+      background: #ff1a1a;
+      box-shadow: 0 0 15px #ff0000;
+      transform: scale(1.05);
+    }
+
+    .switch-link {
+      text-align: center;
+      margin-top: 1rem;
+      cursor: pointer;
+      color: #ffb3b3;
+      text-decoration: underline;
+    }
+
+    .success {
+      grid-column: span 2;
+      text-align: center;
+      margin-top: 1rem;
+      color: #00ff99;
+      font-weight: bold;
+      display: none;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- INTRO SCREEN -->
+  <div id="logoIntro">
+    <!-- change "LOGO.jpeg" to your actual logo filename -->
+    <img src="LOGO.jpeg" alt="Website Logo">
+  </div>
+
+  <div class="main-wrapper">
+    <!-- SIGNUP FORM -->
+    <div class="form-container" id="signupContainer">
+      <h2>Signup Form</h2>
+      <form id="signupForm" class="form-grid" autocomplete="off">
+        <div class="form-group">
+          <label>First Name</label>
+          <input type="text" id="firstname" required autocomplete="off">
+        </div>
+        <div class="form-group">
+          <label>Last Name</label>
+          <input type="text" id="lastname" required autocomplete="off">
+        </div>
+        <div class="form-group">
+          <label>Email</label>
+          <input type="email" id="email" required autocomplete="off">
+        </div>
+        <div class="form-group">
+          <label>Phone</label>
+          <input type="tel" id="phone" pattern="[0-9]{11}" required autocomplete="off">
+        </div>
+        <div class="form-group">
+          <label>CNIC</label>
+          <input type="text" id="cnic" pattern="[0-9]{13}" required autocomplete="off">
+        </div>
+        <div class="form-group">
+          <label>Age</label>
+          <input type="number" id="age" min="18" max="100" required autocomplete="off">
+        </div>
+        <div class="form-group full-width">
+          <label>Address</label>
+          <textarea id="address" rows="2" required autocomplete="off"></textarea>
+        </div>
+        <div class="form-group full-width">
+          <label>Gender</label>
+          <select id="gender" required>
+            <option value="" disabled selected>Select Gender</option>
+            <option>Male</option>
+            <option>Female</option>
+            <option>Other</option>
+          </select>
+        </div>
+        <div class="form-group full-width">
+          <label>Password</label>
+          <input type="password" id="password" required autocomplete="new-password">
+        </div>
+
+        <button type="submit" class="btn">Signup</button>
+        <p class="success" id="signupSuccess">Signup Successful!</p>
+        <p class="switch-link" id="toLogin">Already have an account? Login here</p>
+      </form>
+    </div>
+
+    <!-- LOGIN FORM -->
+    <div class="form-container active" id="loginContainer">
+      <h2>Login</h2>
+      <form id="loginForm" class="form-grid" autocomplete="off">
+        <div class="form-group full-width">
+          <label>Email</label>
+          <input type="email" id="loginEmail" required autocomplete="off">
+        </div>
+        <div class="form-group full-width">
+          <label>Password</label>
+          <input type="password" id="loginPassword" required autocomplete="current-password">
+        </div>
+        <button type="submit" class="btn">Login</button>
+        <p class="success" id="loginSuccess">Login Successful!</p>
+        <p class="switch-link" id="toSignup">Don’t have an account? Signup here</p>
+      </form>
+    </div>
+  </div>
+
+  <!-- Supabase Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/supabaseClient.js"></script>
+  <script src="js/auth.js"></script>
+
+  <script>
+    // handle intro screen timing
+    window.addEventListener("load", () => {
+      // Check auth status immediately using window.auth
+      if (window.auth) {
+        window.auth.checkSession(false); // false means "we are on login page", redirects to main if logged in
+      }
+
+      const intro = document.getElementById("logoIntro");
+      const mainWrapper = document.querySelector(".main-wrapper");
+      setTimeout(() => {
+        intro.classList.add("fade-out");
+        setTimeout(() => {
+          intro.style.display = "none";
+          mainWrapper.style.display = "block";
+        }, 1000);
+      }, 3000); // Intro Time
+    });
+
+    // your existing logic for switching and login/signup
+    const signupContainer = document.getElementById('signupContainer');
+    const loginContainer = document.getElementById('loginContainer');
+
+    function clearSignupFields() { signupForm.reset(); }
+    function clearLoginFields() { loginForm.reset(); }
+
+    document.getElementById('toSignup').onclick = () => {
+      clearLoginFields();
+      document.body.style.background = "url('img1.JPEG') no-repeat center center/cover";
+      loginContainer.classList.remove('active');
+      signupContainer.classList.add('active');
+    };
+
+    document.getElementById('toLogin').onclick = () => {
+      clearSignupFields();
+      document.body.style.background = "url('login pic.JPEG') no-repeat center center/cover";
+      signupContainer.classList.remove('active');
+      loginContainer.classList.add('active');
+    };
+
+    const signupForm = document.getElementById('signupForm');
+    const signupSuccess = document.getElementById('signupSuccess');
+
+    signupForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const firstname = document.getElementById('firstname').value.trim();
+      const lastname = document.getElementById('lastname').value.trim();
+      const email = document.getElementById('email').value.trim();
+      const phone = document.getElementById('phone').value.trim();
+      const cnic = document.getElementById('cnic').value.trim();
+      const age = document.getElementById('age').value.trim();
+      const address = document.getElementById('address').value.trim();
+      const gender = document.getElementById('gender').value;
+      const password = document.getElementById('password').value.trim();
+
+      const userDetails = { firstname, lastname, email, phone, cnic, age, address, gender };
+
+      if (window.auth) {
+        const { data, error } = await window.auth.signUp(email, password, userDetails);
+
+        if (error) {
+          alert("Signup Failed: " + error.message);
+          return;
+        }
+
+        // Check if we got a session immediately (Auto-confirm enabled)
+        if (data.session) {
+          signupSuccess.style.display = 'block';
+          signupSuccess.textContent = 'Signup Successful! Logging in...';
+          signupForm.reset();
+
+          setTimeout(() => {
+            window.location.href = "main.html";
+          }, 1000);
+        } else {
+          // No session, meaning Email Confirmation is required
+          signupSuccess.style.display = 'block';
+          signupSuccess.textContent = 'Signup Successful! Please check your email to confirm.';
+          signupForm.reset();
+
+          setTimeout(() => {
+            signupSuccess.style.display = 'none';
+            signupContainer.classList.remove('active');
+            loginContainer.classList.add('active');
+            clearLoginFields();
+            document.body.style.background = "url('login pic.JPEG') no-repeat center center/cover";
+          }, 3000);
+        }
+      } else {
+        alert('Authentication system failed to load.');
+      }
+    });
+
+    const loginForm = document.getElementById('loginForm');
+    const loginSuccess = document.getElementById('loginSuccess');
+
+    loginForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const enteredEmail = document.getElementById('loginEmail').value.trim();
+      const enteredPassword = document.getElementById('loginPassword').value.trim();
+
+      if (window.auth) {
+        const { data, error } = await window.auth.signIn(enteredEmail, enteredPassword);
+
+        if (error) {
+          if (error.message.includes("Email not confirmed")) {
+            alert("Login Failed: Your email is not confirmed.\n\nFix 1: Check your email inbox and click the link.\nFix 2: Run the 'fix_email.sql' script in Supabase to force confirm.");
+          } else {
+            alert('Login Failed: ' + error.message);
+          }
+          return;
+        }
+
+        // Success
+        loginSuccess.style.display = 'block';
+        loginSuccess.textContent = 'Login Successful!';
+        clearLoginFields();
+
+        setTimeout(() => {
+          loginSuccess.style.display = 'none';
+          window.location.href = "main.html";
+        }, 1500);
+      } else {
+        alert('Authentication system failed to load.');
+      }
+    });
+  </script>
+</body>
+
+</html>

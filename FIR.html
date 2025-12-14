@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FIR Registration - Crime Investigation System</title>
+  <style>
+    /* Animated Background */
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background: url('fir-bg.jpeg') no-repeat center center fixed;
+      background-size: cover;
+      color: #f2f2f2;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      animation: bgZoom 20s ease-in-out infinite alternate;
+    }
+
+    @keyframes bgZoom {
+      0% {
+        background-size: 100% auto;
+      }
+
+      100% {
+        background-size: 110% auto;
+      }
+    }
+
+    /* Container */
+    .fir-container {
+      background: rgba(15, 15, 15, 0.92);
+      border: 1px solid #ff0000;
+      border-radius: 18px;
+      box-shadow: 0 0 25px rgba(255, 0, 0, 0.3);
+      width: 80%;
+      max-width: 900px;
+      padding: 30px 40px;
+      backdrop-filter: blur(10px);
+      transition: 0.5s;
+    }
+
+    .fir-container:hover {
+      transform: scale(1.01);
+      box-shadow: 0 0 40px rgba(255, 0, 0, 0.6);
+    }
+
+    /* Title Animation */
+    h1 {
+      text-align: center;
+      color: #ff3333;
+      font-size: 2.2rem;
+      margin-bottom: 25px;
+      text-shadow: 0 0 12px #ff0000;
+      animation: glow 2s infinite alternate;
+    }
+
+    @keyframes glow {
+      0% {
+        text-shadow: 0 0 8px #ff0000;
+      }
+
+      100% {
+        text-shadow: 0 0 20px #ff5555;
+      }
+    }
+
+    /* Form Styling */
+    form {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+
+    .full {
+      grid-column: 1 / 3;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 8px;
+      color: #ff6666;
+      font-weight: 600;
+    }
+
+    input,
+    select,
+    textarea {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #444;
+      border-radius: 8px;
+      background: #1a1a1a;
+      color: #fff;
+      font-size: 0.95rem;
+      transition: 0.3s;
+    }
+
+    input:focus,
+    select:focus,
+    textarea:focus {
+      outline: none;
+      border-color: #ff0000;
+      box-shadow: 0 0 10px rgba(255, 0, 0, 0.4);
+    }
+
+    textarea {
+      resize: none;
+      height: 100px;
+    }
+
+    button {
+      grid-column: 1 / 3;
+      background: #ff0000;
+      border: none;
+      padding: 12px;
+      font-size: 1rem;
+      color: white;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: 0.3s;
+      font-weight: 600;
+      letter-spacing: 1px;
+    }
+
+    button:hover {
+      background: #cc0000;
+      transform: scale(1.05);
+      box-shadow: 0 0 18px rgba(255, 0, 0, 0.6);
+    }
+
+    .note {
+      grid-column: 1 / 3;
+      text-align: center;
+      color: #999;
+      font-size: 0.9rem;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="fir-container">
+    <h1>📝 FIR Registration Form</h1>
+
+    <form>
+      <div>
+        <label for="name">Complainant Name</label>
+        <input type="text" id="name" placeholder="Enter full name" required>
+      </div>
+
+      <div>
+        <label for="cnic">CNIC</label>
+        <input type="text" id="cnic" placeholder="e.g. 35202-1234567-8" required>
+      </div>
+
+      <div>
+        <label for="contact">Contact Number</label>
+        <input type="tel" id="contact" placeholder="+92-3XX-XXXXXXX" required>
+      </div>
+
+      <div>
+        <label for="address">Address</label>
+        <input type="text" id="address" placeholder="Enter your address" required>
+      </div>
+
+      <div>
+        <label for="crime-type">Type of Crime</label>
+        <select id="crime-type" required>
+          <option value="">-- Select Crime Type --</option>
+          <option>Murder</option>
+          <option>Robbery</option>
+          <option>Kidnapping</option>
+          <option>Cyber Crime</option>
+          <option>Fraud</option>
+          <option>Harassment</option>
+          <option>Other</option>
+        </select>
+      </div>
+
+      <div>
+        <label for="crime-location">Location of Crime (Karachi)</label>
+        <select id="crime-location" required>
+          <option value="">-- Select Area --</option>
+          <option>Clifton</option>
+          <option>Gulshan-e-Iqbal</option>
+          <option>North Nazimabad</option>
+          <option>Korangi</option>
+          <option>Malir</option>
+          <option>Lyari</option>
+          <option>Defence</option>
+          <option>Saddar</option>
+          <option>Orangi Town</option>
+          <option>Shah Faisal Colony</option>
+        </select>
+      </div>
+
+      <div>
+        <label for="crime-date">Date of Incident</label>
+        <input type="date" id="crime-date" required>
+      </div>
+
+      <div>
+        <label for="crime-time">Time of Incident</label>
+        <input type="time" id="crime-time" required>
+      </div>
+
+      <div class="full">
+        <label for="description">Incident Description</label>
+        <textarea id="description" placeholder="Describe what happened in detail..." required></textarea>
+      </div>
+
+      <div>
+        <label for="suspect">Suspect Name (if known)</label>
+        <input type="text" id="suspect" placeholder="Enter suspect name (optional)">
+      </div>
+
+      <div>
+        <label for="evidence">Upload Evidence</label>
+        <input type="file" id="evidence" accept="image/*,video/*,application/pdf">
+      </div>
+
+      <button type="submit">Submit FIR</button>
+
+      <div class="note">
+        ⚠️ Filing a false FIR is a punishable offense under law.
+      </div>
+    </form>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/supabaseClient.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/db.js"></script>
+  <script>
+    // Check Session
+    window.addEventListener('load', () => {
+      if (window.auth) window.auth.checkSession(true);
+    });
+
+    const form = document.querySelector('form');
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const user = await window.auth.getCurrentUser();
+      if (!user) {
+        alert("You must be logged in to submit an FIR.");
+        return;
+      }
+
+      const firData = {
+        user_id: user.id,
+        complainant_name: document.getElementById('name').value,
+        cnic: document.getElementById('cnic').value,
+        contact: document.getElementById('contact').value,
+        address: document.getElementById('address').value,
+        crime_type: document.getElementById('crime-type').value,
+        crime_location: document.getElementById('crime-location').value,
+        crime_date: document.getElementById('crime-date').value,
+        crime_time: document.getElementById('crime-time').value,
+        description: document.getElementById('description').value,
+        suspect_name: document.getElementById('suspect').value,
+        // For evidence, we are just storing the filename for now as file upload requires Storage setup
+        evidence_details: document.getElementById('evidence').value
+      };
+
+      const { data, error } = await window.db.insertRow('cis_firs', firData);
+
+      if (error) {
+        alert("Error submitting FIR: " + error.message);
+        console.error(error);
+      } else {
+        alert("FIR Submitted Successfully!");
+        form.reset();
+      }
+    });
+  </script>
+</body>
+
+</html>

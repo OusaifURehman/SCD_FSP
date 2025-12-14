@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Crime Investigation System - Open Suspects</title>
+<style>
+  body {
+    margin: 0;
+    font-family: "Poppins", sans-serif;
+    background: linear-gradient(135deg, #000000, #1a1a1a);
+    color: white;
+    overflow-x: hidden;
+    background: url(suspect-bg.jpeg) no-repeat center center fixed;
+  background-size: cover;
+  }
+
+  header {
+    text-align: center;
+    padding: 40px 20px;
+    background: rgba(255, 0, 0, 0.1);
+    box-shadow: 0 0 20px rgba(255, 0, 0, 0.4);
+    animation: fadeIn 2s ease-in-out;
+  }
+
+  header h1 {
+    font-size: 40px;
+    color: #ff1a1a;
+    letter-spacing: 2px;
+    margin-bottom: 10px;
+  }
+
+  header p {
+    color: #ccc;
+    font-size: 18px;
+  }
+
+  /* Search bar */
+  .search-bar {
+    text-align: center;
+    margin: 20px 0;
+  }
+
+  .search-bar input {
+    width: 50%;
+    padding: 10px;
+    border-radius: 25px;
+    border: none;
+    outline: none;
+    background: #222;
+    color: white;
+    font-size: 16px;
+    box-shadow: 0 0 10px rgba(255, 0, 0, 0.3);
+  }
+
+  /* Suspect Cards */
+  .suspect-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 25px;
+    padding: 30px;
+  }
+
+  .suspect-card {
+    width: 260px;
+    background: rgba(20, 20, 20, 0.85);
+    border: 1px solid #ff1a1a;
+    border-radius: 15px;
+    box-shadow: 0 0 20px rgba(255, 0, 0, 0.3);
+    text-align: center;
+    padding: 20px;
+    transition: transform 0.3s, box-shadow 0.3s;
+    animation: slideUp 1.5s ease-in-out;
+  }
+
+  .suspect-card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 25px rgba(255, 0, 0, 0.6);
+  }
+
+  .suspect-card img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #ff1a1a;
+    box-shadow: 0 0 10px rgba(255, 0, 0, 0.4);
+  }
+
+  .suspect-card h3 {
+    color: #ff1a1a;
+    margin-top: 10px;
+  }
+
+  .suspect-card p {
+    font-size: 15px;
+    color: #ccc;
+    margin: 6px 0;
+  }
+
+  .status {
+    margin-top: 10px;
+    display: inline-block;
+    padding: 5px 15px;
+    border-radius: 20px;
+    color: white;
+    font-weight: bold;
+  }
+
+  .danger { background: #ff1a1a; }
+  .under-surveillance { background: orange; }
+  .in-custody { background: green; }
+
+  /* Footer */
+  footer {
+    text-align: center;
+    padding: 15px;
+    background: rgba(255, 0, 0, 0.1);
+    color: #888;
+    font-size: 14px;
+  }
+
+  /* Animations */
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes slideUp {
+    from { transform: translateY(40px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+  }
+</style>
+</head>
+<body>
+
+  <header>
+    <h1>Open Suspects</h1>
+    <p>List of individuals currently under investigation</p>
+  </header>
+
+  <div class="search-bar">
+    <input type="text" placeholder="🔍 Search suspect by name or ID">
+  </div>
+
+  <section class="suspect-container">
+    <div class="suspect-card">
+      <img src="suspect1.JFIF" alt="Suspect 1">
+      <h3>Richard Ramrez</h3>
+      <p><b>Suspect ID:</b> SUS-1023</p>
+      <p><b>Crime Type:</b> Cyber Fraud</p>
+      <p><b>Location:</b> Karachi</p>
+      <p><b>Officer:</b> Inspector Ali Khan</p>
+      <span class="status under-surveillance">Under Surveillance</span>
+    </div>
+
+    <div class="suspect-card">
+      <img src="suspect2.JFIF" alt="Suspect 2">
+      <h3>Ahmed Raza</h3>
+      <p><b>Suspect ID:</b> SUS-1078</p>
+      <p><b>Crime Type:</b> Armed Robbery</p>
+      <p><b>Location:</b> Lahore</p>
+      <p><b>Officer:</b> DSP Sana Malik</p>
+      <span class="status danger">Wanted</span>
+    </div>
+
+    <div class="suspect-card">
+      <img src="suspect3.JFIF" alt="Suspect 3">
+      <h3>Bilal Khan</h3>
+      <p><b>Suspect ID:</b> SUS-1101</p>
+      <p><b>Crime Type:</b> Murder Investigation</p>
+      <p><b>Location:</b> Islamabad</p>
+      <p><b>Officer:</b> Inspector Rehman</p>
+      <span class="status in-custody">In Custody</span>
+    </div>
+  </section>
+
+  <footer>
+    © 2025 Crime Investigation System | Open Suspects Module
+  </footer>
+
+</body>
+</html>

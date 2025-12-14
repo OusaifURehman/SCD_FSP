@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Crime Investigation System - Open Victims</title>
+<style>
+  body {
+    margin: 0;
+    font-family: "Poppins", sans-serif;
+    background: linear-gradient(135deg, #000000, #1a1a1a);
+    color: white;
+    overflow-x: hidden;
+  }
+
+  header {
+    text-align: center;
+    padding: 40px 20px;
+    background: rgba(255, 0, 0, 0.1);
+    box-shadow: 0 0 20px rgba(255, 0, 0, 0.4);
+    animation: fadeIn 2s ease-in-out;
+  }
+
+  header h1 {
+    font-size: 42px;
+    color: #ff1a1a;
+    letter-spacing: 2px;
+    margin-bottom: 10px;
+  }
+
+  header p {
+    color: #ccc;
+    font-size: 18px;
+  }
+
+  /* Search bar */
+  .search-bar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 25px 0;
+    animation: fadeIn 2s ease-in-out;
+  }
+
+  .search-bar input, .search-bar select {
+    padding: 10px;
+    border-radius: 10px;
+    border: none;
+    outline: none;
+    margin: 0 10px;
+    background: rgba(255,255,255,0.1);
+    color: white;
+    width: 200px;
+  }
+
+  .search-bar button {
+    padding: 10px 20px;
+    background: #ff1a1a;
+    border: none;
+    border-radius: 10px;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+  }
+
+  .search-bar button:hover {
+    background: #ff0000;
+    box-shadow: 0 0 15px #ff1a1a;
+  }
+
+  /* Summary Cards */
+  .stats {
+    display: flex;
+    justify-content: center;
+    gap: 25px;
+    flex-wrap: wrap;
+    margin: 20px 0;
+    animation: slideUp 2s ease-in-out;
+  }
+
+  .stats .box {
+    background: rgba(20, 20, 20, 0.8);
+    border: 1px solid #ff1a1a;
+    border-radius: 15px;
+    padding: 20px 40px;
+    text-align: center;
+    box-shadow: 0 0 15px rgba(255, 0, 0, 0.3);
+    transition: transform 0.3s;
+  }
+
+  .stats .box:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 25px rgba(255, 0, 0, 0.6);
+  }
+
+  .stats .box h2 {
+    color: #ff1a1a;
+    font-size: 36px;
+  }
+
+  .stats .box p {
+    color: #ccc;
+  }
+
+  /* Victim Cards */
+  .victim-cards {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 25px;
+    padding: 20px;
+  }
+
+  .card {
+    background: rgba(20, 20, 20, 0.8);
+    border: 1px solid #ff1a1a;
+    border-radius: 15px;
+    width: 280px;
+    padding: 20px;
+    box-shadow: 0 0 15px rgba(255, 0, 0, 0.3);
+    transition: transform 0.3s, box-shadow 0.3s;
+    animation: fadeIn 2s ease-in-out;
+  }
+
+  .card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 25px rgba(255, 0, 0, 0.6);
+  }
+
+  .card img {
+    width: 100%;
+    height: 180px;
+    border-radius: 10px;
+    object-fit: cover;
+    margin-bottom: 10px;
+  }
+
+  .card h3 {
+    color: #ff1a1a;
+    margin-bottom: 8px;
+  }
+
+  .card p {
+    font-size: 14px;
+    color: #ccc;
+    margin-bottom: 6px;
+  }
+
+  .status {
+    padding: 6px 10px;
+    border-radius: 8px;
+    font-weight: bold;
+    display: inline-block;
+    margin-top: 8px;
+  }
+
+  .critical { background: #ff0000; color: white; }
+  .under-care { background: orange; color: white; }
+  .safe { background: green; color: white; }
+
+  /* Footer */
+  footer {
+    text-align: center;
+    padding: 15px;
+    background: rgba(255, 0, 0, 0.1);
+    color: #888;
+    font-size: 14px;
+    margin-top: 30px;
+  }
+
+  /* Animations */
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes slideUp {
+    from { transform: translateY(40px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+  }
+
+</style>
+</head>
+<body>
+
+  <header>
+    <h1>Open Victims</h1>
+    <p>Tracking individuals affected by ongoing investigations.</p>
+  </header>
+
+  <!-- Search Filters -->
+  <div class="search-bar">
+    <input type="text" placeholder="Search Victim Name">
+    <select>
+      <option value="">Filter by Status</option>
+      <option>Critical</option>
+      <option>Under Care</option>
+      <option>Safe</option>
+    </select>
+    <button>Search</button>
+  </div>
+
+  <!-- Summary -->
+  <section class="stats">
+    <div class="box">
+      <h2>85</h2>
+      <p>Total Victims</p>
+    </div>
+    <div class="box">
+      <h2>30</h2>
+      <p>Under Medical Care</p>
+    </div>
+    <div class="box">
+      <h2>10</h2>
+      <p>In Protection</p>
+    </div>
+    <div class="box">
+      <h2>45</h2>
+      <p>Stable Condition</p>
+    </div>
+  </section>
+
+  <!-- Victim Cards -->
+  <section class="victim-cards">
+    <div class="card">
+      <img src="victim1.JFIF" alt="Victim 1">
+      <h3>Sarah Khan</h3>
+      <p><b>Case ID:</b> C-1024</p>
+      <p><b>Crime Type:</b> Assault</p>
+      <p><b>Location:</b> Karachi</p>
+      <p><b>Officer:</b> Inspector Ali</p>
+      <span class="status under-care">Under Care</span>
+    </div>
+
+    <div class="card">
+      <img src="victim2.JPG" alt="Victim 2">
+      <h3>Ahmed Raza</h3>
+      <p><b>Case ID:</b> C-1150</p>
+      <p><b>Crime Type:</b> Robbery</p>
+      <p><b>Location:</b> Lahore</p>
+      <p><b>Officer:</b> DSP Farooq</p>
+      <span class="status safe">Stable</span>
+    </div>
+
+    <div class="card">
+      <img src="victim3.JFIF" alt="Victim 3">
+      <h3>Ayesha Malik</h3>
+      <p><b>Case ID:</b> C-1192</p>
+      <p><b>Crime Type:</b> Kidnapping</p>
+      <p><b>Location:</b> Islamabad</p>
+      <p><b>Officer:</b> Inspector Zain</p>
+      <span class="status critical">Critical</span>
+    </div>
+  </section>
+
+  <footer>
+    © 2025 Crime Investigation System | Open Victims Module
+  </footer>
+
+</body>
+</html>

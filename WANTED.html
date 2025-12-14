@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>WANTED — Live Secure Terminal</title>
+  <style>
+    :root {
+      --bg: #050505;
+      --panel: #0f0f10;
+      --accent: #ff2b2b;
+      --muted: #bdbdbd;
+      --glass: rgba(255, 255, 255, 0.03);
+      --card: rgba(255, 255, 255, 0.02);
+    }
+
+    * {
+      box-sizing: border-box
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: 'Poppins', Inter, system-ui, sans-serif;
+      background:
+        radial-gradient(1000px 400px at 10% 10%, rgba(255, 0, 0, 0.03), transparent 6%),
+        linear-gradient(180deg, #040404 0%, #0b0b0b 100%);
+      color: #eee;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* App shell */
+    .app {
+      display: grid;
+      grid-template-columns: 380px 1fr;
+      gap: 28px;
+      height: 100vh;
+      padding: 28px;
+    }
+
+    /* LEFT: list */
+    .left {
+      background: linear-gradient(180deg, rgba(255, 0, 0, 0.02), transparent);
+      border-radius: 14px;
+      padding: 16px;
+      border: 1px solid rgba(255, 0, 0, 0.06);
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.7);
+      overflow: auto;
+    }
+
+    .left .head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+
+    .left h3 {
+      margin: 0;
+      color: var(--accent);
+      letter-spacing: 1px
+    }
+
+    .controls {
+      display: flex;
+      gap: 8px;
+      align-items: center
+    }
+
+    .controls input {
+      background: transparent;
+      border: 1px solid rgba(255, 255, 255, 0.04);
+      padding: 8px;
+      border-radius: 8px;
+      color: #ddd;
+      outline: none;
+      width: 160px;
+    }
+
+    .filter {
+      padding: 8px 10px;
+      border-radius: 8px;
+      background: rgba(255, 0, 0, 0.06);
+      color: var(--accent);
+      font-weight: 600;
+      font-size: 0.85rem;
+      border: 1px solid rgba(255, 0, 0, 0.06)
+    }
+
+    .list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-top: 8px
+    }
+
+    .item {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      padding: 10px;
+      border-radius: 10px;
+      background: var(--card);
+      border: 1px solid rgba(255, 0, 0, 0.04);
+      transition: transform .18s ease, box-shadow .18s ease;
+      cursor: pointer;
+      position: relative;
+    }
+
+    .item:hover {
+      transform: translateX(6px);
+      box-shadow: 0 8px 20px rgba(255, 0, 0, 0.06)
+    }
+
+    .thumb {
+      width: 72px;
+      height: 72px;
+      border-radius: 8px;
+      overflow: hidden;
+      border: 2px solid rgba(255, 0, 0, 0.08)
+    }
+
+    .thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block
+    }
+
+    .meta {
+      flex: 1;
+      min-width: 0
+    }
+
+    .name {
+      font-weight: 700;
+      color: #fff;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis
+    }
+
+    .sub {
+      font-size: 0.82rem;
+      color: var(--muted);
+      margin-top: 4px
+    }
+
+    .flag {
+      font-size: 0.72rem;
+      padding: 6px 8px;
+      border-radius: 8px;
+      background: linear-gradient(90deg, #220000, #420000);
+      color: #fff;
+      border: 1px solid rgba(255, 0, 0, 0.2)
+    }
+
+    /* MAIN: secure terminal */
+    .main {
+      border-radius: 14px;
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.01), rgba(255, 255, 255, 0.00));
+      padding: 18px;
+      border: 1px solid rgba(255, 0, 0, 0.06);
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
+      overflow: auto;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 12px
+    }
+
+    .terminal-title {
+      font-size: 1.25rem;
+      color: var(--accent);
+      font-weight: 800;
+      letter-spacing: 1px
+    }
+
+    .status-bubble {
+      background: rgba(255, 0, 0, 0.12);
+      padding: 8px 12px;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 0, 0, 0.15);
+      color: var(--accent);
+      font-weight: 700
+    }
+
+    .detail {
+      display: grid;
+      grid-template-columns: 420px 1fr;
+      gap: 18px;
+      align-items: start;
+    }
+
+    /* left detail card */
+    .file {
+      background: rgba(8, 8, 8, 0.6);
+      padding: 12px;
+      border-radius: 12px;
+      border: 1px solid rgba(255, 0, 0, 0.04);
+    }
+
+    .photo-large {
+      width: 100%;
+      height: 360px;
+      border-radius: 10px;
+      overflow: hidden;
+      border: 3px solid rgba(255, 0, 0, 0.08);
+      cursor: pointer
+    }
+
+    .photo-large img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      filter: contrast(0.95) saturate(.95)
+    }
+
+    .quick {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-top: 12px
+    }
+
+    .fact {
+      background: rgba(255, 255, 255, 0.02);
+      padding: 8px 10px;
+      border-radius: 8px;
+      border: 1px solid rgba(255, 0, 0, 0.04);
+      font-size: 0.86rem;
+      color: var(--muted)
+    }
+
+    /* right info panel */
+    .info-panel {
+      background: linear-gradient(180deg, rgba(20, 0, 0, 0.45), rgba(10, 0, 0, 0.18));
+      padding: 14px;
+      border-radius: 12px;
+      border: 1px solid rgba(255, 0, 0, 0.04);
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+    }
+
+    .info-panel h3 {
+      color: var(--accent);
+      margin: 0 0 8px 0
+    }
+
+    .notes {
+      color: #e6dede;
+      font-size: 0.95rem;
+      line-height: 1.5;
+      flex: 0 0 auto
+    }
+
+    .timeline {
+      margin-top: 12px;
+      border-left: 2px dashed rgba(255, 0, 0, 0.06);
+      padding-left: 12px;
+      flex: 1 1 auto;
+      overflow: auto
+    }
+
+    .step {
+      margin-bottom: 12px
+    }
+
+    .step time {
+      display: block;
+      font-size: 0.78rem;
+      color: var(--muted);
+      margin-bottom: 6px
+    }
+
+    .step p {
+      margin: 0;
+      color: #f3eaea;
+      font-size: 0.92rem
+    }
+
+    .map {
+      margin-top: 10px;
+      height: 140px;
+      border-radius: 10px;
+      background: linear-gradient(135deg, #080808, #0d0d0d);
+      border: 1px solid rgba(255, 0, 0, 0.04);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--muted);
+      font-size: 0.95rem
+    }
+
+    /* bottom: tip form + ticker */
+    .bottom {
+      margin-top: 16px;
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap
+    }
+
+    .tip {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      background: var(--card);
+      padding: 10px;
+      border-radius: 10px;
+      border: 1px solid rgba(255, 0, 0, 0.04)
+    }
+
+    .tip input,
+    .tip textarea {
+      background: transparent;
+      border: 1px dashed rgba(255, 255, 255, 0.03);
+      padding: 8px;
+      border-radius: 8px;
+      color: #eee;
+      outline: none
+    }
+
+    .send {
+      background: linear-gradient(90deg, var(--accent), #990000);
+      border: none;
+      color: white;
+      padding: 10px 12px;
+      border-radius: 8px;
+      cursor: pointer;
+      border: 1px solid rgba(255, 0, 0, 0.1)
+    }
+
+    .ticker {
+      flex: 1;
+      min-width: 260px;
+      margin-left: 6px;
+      padding: 10px 14px;
+      border-radius: 10px;
+      background: rgba(0, 0, 0, 0.35);
+      border: 1px solid rgba(255, 0, 0, 0.03);
+      overflow: hidden;
+      position: relative;
+      height: 46px
+    }
+
+    .marquee {
+      position: absolute;
+      white-space: nowrap;
+      animation: marq 20s linear infinite;
+      color: var(--muted);
+      will-change: transform
+    }
+
+    @keyframes marq {
+      0% {
+        transform: translateX(100%)
+      }
+
+      100% {
+        transform: translateX(-100%)
+      }
+    }
+
+    /* large modal viewer */
+    .modal {
+      position: fixed;
+      inset: 0;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      background: rgba(0, 0, 0, 0.8);
+      z-index: 9999
+    }
+
+    .viewer {
+      max-width: 90%;
+      max-height: 90%;
+      border-radius: 10px;
+      overflow: hidden;
+      border: 6px solid rgba(255, 0, 0, 0.08);
+      box-shadow: 0 30px 90px rgba(0, 0, 0, 0.8)
+    }
+
+    .viewer img {
+      width: 100%;
+      height: auto;
+      display: block
+    }
+
+    .modal .close {
+      position: absolute;
+      top: 28px;
+      right: 28px;
+      background: rgba(0, 0, 0, 0.6);
+      color: #fff;
+      padding: 8px 10px;
+      border-radius: 8px;
+      border: 1px solid rgba(255, 0, 0, 0.12);
+      cursor: pointer
+    }
+
+    /* responsive */
+    @media (max-width:1100px) {
+      .app {
+        grid-template-columns: 1fr;
+        grid-auto-rows: auto;
+        height: auto
+      }
+
+      .left {
+        order: 2;
+        height: 320px;
+        overflow-x: auto
+      }
+
+      .main {
+        order: 1
+      }
+
+      .detail {
+        grid-template-columns: 1fr
+      }
+
+      .photo-large {
+        height: 240px
+      }
+
+      .ticker {
+        width: 100%;
+        margin-left: 0
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="app">
+
+    <!-- LEFT: live list -->
+    <aside class="left" aria-label="Wanted list">
+      <div class="head">
+        <h3>WANTED — LIVE DASHBOARD</h3>
+        <div class="controls">
+          <input id="search" placeholder="Search name / city / tag">
+          <div class="filter">LIVE</div>
+        </div>
+      </div>
+
+      <div class="list" id="list">
+        <!-- JS will populate 20 items here -->
+      </div>
+    </aside>
+
+    <!-- MAIN: secure terminal -->
+    <main class="main" role="main" aria-live="polite">
+      <div class="topbar">
+        <div class="terminal-title">SECURE TERMINAL — WANTED PROFILES</div>
+        <div class="status-bubble" id="liveStatus">LIVE • 20 ACTIVE</div>
+      </div>
+
+      <section class="detail">
+        <div class="file">
+          <div class="photo-large" id="photoLarge" title="Click to enlarge">
+            <img src="" alt="selected suspect" id="largeImg">
+          </div>
+
+          <div class="quick" id="quickFacts">
+            <!-- small fact chips -->
+          </div>
+        </div>
+
+        <aside class="info-panel">
+          <h3 id="profileName">Select a suspect from the left</h3>
+          <div class="notes" id="profileNotes">Click any profile to view timeline, last seen, and case notes in this
+            secure terminal.</div>
+
+          <div class="timeline" id="profileTimeline" aria-label="Timeline">
+            <!-- timeline steps -->
+          </div>
+
+          <div class="map" id="map">MAP / GEO: —</div>
+        </aside>
+      </section>
+
+      <div class="bottom">
+        <div class="tip">
+          <input id="tipName" placeholder="Your name (optional)" />
+          <input id="tipContact" placeholder="Phone or Email" />
+          <textarea id="tipMsg" placeholder="Tip — location/time/vehicle" rows="1"></textarea>
+          <button class="send" id="sendTip">Send Tip</button>
+        </div>
+
+        <div class="ticker" aria-hidden="true">
+          <div class="marquee" id="marquee">LIVE: Loading wanted feed ...</div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- modal viewer -->
+  <div class="modal" id="modal">
+    <button class="close" id="closeModal">CLOSE</button>
+    <div class="viewer"><img src="want1.jpg" alt="viewer" id="viewerImg"></div>
+  </div>
+
+  <script>
+    
+    const suspects = [
+      { id: 'A-01', name: 'John "Reaper" Smith', crime: 'Homicide • Robbery', city: 'Karachi', status: 'Armed', reward: 'Rs. 500,000', age: 35, height: "5'11\"", notes: 'Believed to use a white Civic with altered plates. Highly dangerous.', img: '1.JPG' , timeline: [['14 Jul 23:47', 'CCTV captures suspect near alley.'], ['15 Jul 00:10', 'Vehicle seen leaving scene.'], ['16 Jul', 'Gait-match analysis positive.']], geo: 'Saddar, Karachi' },
+      { id: 'B-02', name: 'Maria "Shadow" Khan', crime: 'Cyber Fraud • Blackmail', city: 'Lahore', status: 'Most Wanted', reward: 'Rs. 350,000', age: 30, height: "5'6\"", notes: 'Expert in online identity theft. Uses VPN and fake IDs.', img: 'want1.jpg', timeline: [['10 Jun', 'Complaint filed'], ['12 Jun', 'Server logs traced to region.']], geo: 'Gulberg, Lahore' },
+      { id: 'C-03', name: 'Ali "Ghost" Raza', crime: 'Kidnapping • Extortion', city: 'Islamabad', status: 'Very Dangerous', reward: 'Rs. 800,000', age: 40, height: "6\'0\"", notes: 'Linked to 3 abduction cases; known disguises.', img: 'PIC4.JPEG', timeline: [['20 May', 'Kidnapping reported'], ['21 May', 'Last seen near G-10']], geo: 'G-10, Islamabad' },
+      { id: 'D-04', name: 'Bilal "Rogue" Ahmed', crime: 'Arms Smuggling', city: 'Hyderabad', status: 'On the Run', reward: 'Rs. 400,000', age: 42, height: "5\'10\"", notes: 'Cross-border trafficking; travels with false passport.', img: 'PIC5.JPEG', timeline: [['02 Apr', 'Border checkpoint breach'], ['05 Apr', 'Shipment intercepted']], geo: 'Hyderabad' },
+      { id: 'E-05', name: 'Khan "Viper" Malik', crime: 'Organized Crime', city: 'Quetta', status: 'Armed', reward: 'Rs. 600,000', age: 45, height: "6\'1\"", notes: 'Leader of gang involved in multiple violent crimes.', img: 'PIC6.JPEG', timeline: [['01 Jan', 'Gang raid intelligence'], ['03 Feb', 'Associate arrested']], geo: 'Quetta' },
+      { id: 'F-06', name: 'Sara "Ghost" Ahmed', crime: 'Human Trafficking', city: 'Peshawar', status: 'Active', reward: 'Rs. 300,000', age: 38, height: "5\'7\"", notes: 'Operates several trafficking routes.', img: 'want2.JFIF', timeline: [['12 Mar', 'Complaint filed'], ['15 Mar', 'Vehicles tracked']], geo: 'Peshawar' },
+      { id: 'G-07', name: 'Omar "Shade" Khan', crime: 'Drug Trafficking', city: 'Faisalabad', status: 'High Priority', reward: 'Rs. 450,000', age: 33, height: "5\'9\"", notes: 'Main courier identified via CCTV.', img: 'PIC10.jpeg', timeline: [['09 Apr', 'Shipment tracked'], ['10 Apr', 'Partial arrest of associate']], geo: 'Faisalabad' },
+      { id: 'H-08', name: 'Rizwan "Blaze" Ali', crime: 'Armed Robbery', city: 'Sialkot', status: 'Armed', reward: 'Rs. 250,000', age: 29, height: "5\'8\"", notes: 'Uses motorcycle during robberies. Dangerous when cornered.', img: 'PIC11.jpeg', timeline: [['11 Jun', 'Multiple robberies logged'], ['12 Jun', 'Witness statement collected']], geo: 'Sialkot' },
+      { id: 'I-09', name: 'Naveed "Lock" Shah', crime: 'Burglary', city: 'Multan', status: 'At Large', reward: 'Rs. 120,000', age: 31, height: "5\'9\"", notes: 'Specializes in residential break-ins.', img: 'suspect1.jfif', timeline: [['03 May', 'Series of burglaries'], ['05 May', 'Tool marks analyzed']], geo: 'Multan' },
+      { id: 'J-10', name: 'Aisha "Crow" Begum', crime: 'Fraud', city: 'Sukkur', status: 'Wanted', reward: 'Rs. 200,000', age: 34, height: "5\'5\"", notes: 'Financial fraud—multiple victims.', img: 'victim1.jfif', timeline: [['18 Feb', 'Complaint cluster'], ['22 Feb', 'Bank trace initiated']], geo: 'Sukkur' },
+      { id: 'K-11', name: 'Faisal "Drift" Qureshi', crime: 'Hit & Run', city: 'Islamabad', status: 'High Priority', reward: 'Rs. 150,000', age: 27, height: "5\'10\"", notes: 'Vehicle traces found near scene.', img: 'victim3.jfif', timeline: [['02 Aug', 'Incident logged'], ['03 Aug', 'Partial plate recorded']], geo: 'Islamabad' },
+      { id: 'L-12', name: 'Imran "Knox" Zafar', crime: 'Assault', city: 'Karachi', status: 'Armed', reward: 'Rs. 80,000', age: 36, height: "5\'11\"", notes: 'Known violent offender; avoid contact.', img: 'victim2.jpg', timeline: [['14 Jun', 'Assault reported'], ['16 Jun', 'Forensic evidence collected']], geo: 'Karachi' },
+      { id: 'M-13', name: 'Zara "Shade" Noor', crime: 'Blackmail', city: 'Lahore', status: 'At Large', reward: 'Rs. 60,000', age: 28, height: "5\'6\"", notes: 'Targets public figures via leaked info.', img: 'want5.jfif', timeline: [['05 May', 'Blackmail attempt'], ['07 May', 'Digital trace found']], geo: 'Lahore' },
+      { id: 'N-14', name: 'Sami "Edge" Farooq', crime: 'Arson', city: 'Hyderabad', status: 'Most Wanted', reward: 'Rs. 300,000', age: 39, height: "5\'9\"", notes: 'Multiple arson incidents, motive unknown.', img: 'want8.jfif', timeline: [['01 Apr', 'Fire reported'], ['04 Apr', 'Accelerant samples collected']], geo: 'Hyderabad' },
+      { id: 'O-15', name: 'Tariq "Shade" Rafi', crime: 'Carjacking', city: 'Rawalpindi', status: 'Wanted', reward: 'Rs. 110,000', age: 32, height: "5\'11\"", notes: 'Prefers isolated roads at night.', img: 'want9.jfif', timeline: [['20 Jul', 'Carjacking reported'], ['21 Jul', 'CCTV frames uploaded']], geo: 'Rawalpindi' },
+      { id: 'P-16', name: 'Huma "Blade" Iqbal', crime: 'Attempted Murder', city: 'Peshawar', status: 'Armed', reward: 'Rs. 400,000', age: 30, height: "5\'7\"", notes: 'Suspected in targeted attack.', img: 'want6.jfif', timeline: [['10 Jun', 'Attack incident logged'], ['11 Jun', 'Witness identified suspect']], geo: 'Peshawar' },
+      { id: 'Q-17', name: 'Yasir "Rook" Khan', crime: 'Money Laundering', city: 'Quetta', status: 'Wanted', reward: 'Rs. 220,000', age: 46, height: "6\'0\"", notes: 'Large financial network; international links.', img: 'want10.jfif', timeline: [['12 Jan', 'Financial audit started'], ['18 Jan', 'Offshore funds traced']], geo: 'Quetta' },
+      { id: 'R-18', name: 'Zubair "Vex" Mir', crime: 'Illegal Mining', city: 'Gilgit', status: 'Active', reward: 'Rs. 70,000', age: 44, height: "5\'8\"", notes: 'Operating in remote regions; armed guards reported.', img: 'want11.jfif', timeline: [['06 May', 'Illegal site discovered'], ['08 May', 'Equipment seized']], geo: 'Gilgit' },
+      { id: 'S-19', name: 'Noman "Hawk" Tariq', crime: 'Smuggling', city: 'Karachi', status: 'High Priority', reward: 'Rs. 420,000', age: 38, height: "5\'9\"", notes: 'Sea routes used; possible international movement.', img: 'want12.jfif', timeline: [['22 Mar', 'Smuggling route identified'], ['25 Mar', 'Informant tip received']], geo: 'Karachi Port' },
+      { id: 'T-20', name: 'Rubina "Ivory" Sheikh', crime: 'Counterfeit Currency', city: 'Lahore', status: 'Wanted', reward: 'Rs. 90,000', age: 41, height: "5\'4\"", notes: 'Counterfeit ring leader; printers located in warehouse.', img: 'want7.jfif', timeline: [['09 Feb', 'Fake notes found'], ['12 Feb', 'Warehouse traced']], geo: 'Lahore' }
+    ];
+
+    /* helper: create list items */
+    const listEl = document.getElementById('list');
+    const marquee = document.getElementById('marquee');
+    const liveStatus = document.getElementById('liveStatus');
+
+    function renderList(items) {
+      listEl.innerHTML = '';
+      items.forEach(s => {
+        const div = document.createElement('div');
+        div.className = 'item';
+        div.dataset.id = s.id;
+        div.innerHTML = `
+      <div class="thumb"><img src="${s.img}" alt="${s.name}"></div>
+      <div class="meta">
+        <div class="name">${s.name}</div>
+        <div class="sub">${s.crime} • ${s.city}</div>
+        <div class="status">${s.status}</div>
+      </div>
+      <div class="flag">${s.id}</div>
+    `;
+        div.addEventListener('click', () => loadProfile(s.id));
+        listEl.appendChild(div);
+      });
+    }
+
+    /* initial render */
+    renderList(suspects);
+    marquee.textContent = `LIVE: ${suspects.length} active profiles • Latest tip: "white Civic reported near Saddar" • Reward updates: C-03 Rs. 800,000 •`;
+
+    /* load profile into detail panel */
+    function loadProfile(id) {
+      const s = suspects.find(x => x.id === id);
+      if (!s) return;
+      document.getElementById('largeImg').src = s.img;
+      document.getElementById('profileName').textContent = `${s.name} — ${s.id}`;
+      document.getElementById('profileNotes').textContent = s.notes;
+      document.getElementById('map').textContent = 'MAP / GEO: ' + s.geo;
+      // quick facts
+      const quick = document.getElementById('quickFacts');
+      quick.innerHTML = `
+    <div class="fact"><strong>Crime:</strong> ${s.crime}</div>
+    <div class="fact"><strong>Age:</strong> ${s.age}</div>
+    <div class="fact"><strong>Height:</strong> ${s.height}</div>
+    <div class="fact"><strong>Last Seen:</strong> ${s.city}</div>
+    <div class="fact"><strong>Reward:</strong> ${s.reward}</div>
+    <div class="fact"><strong>Status:</strong> ${s.status}</div>
+  `;
+      // timeline
+      const tl = document.getElementById('profileTimeline');
+      tl.innerHTML = '';
+      s.timeline.forEach(step => {
+        const node = document.createElement('div');
+        node.className = 'step';
+        node.innerHTML = `<time>${step[0]}</time><p>${step[1]}</p>`;
+        tl.appendChild(node);
+      });
+      // update live status slightly
+      liveStatus.textContent = `LIVE • ${suspects.length} ACTIVE • Viewing ${s.id}`;
+    }
+
+    /* search filter */
+    document.getElementById('search').addEventListener('input', e => {
+      const q = e.target.value.trim().toLowerCase();
+      const filtered = suspects.filter(s => {
+        return s.name.toLowerCase().includes(q) || s.city.toLowerCase().includes(q) || s.crime.toLowerCase().includes(q) || s.id.toLowerCase().includes(q);
+      });
+      renderList(filtered);
+      marquee.textContent = `LIVE: ${filtered.length} shown • Searching: "${q || 'all'}"`;
+    });
+
+    /* clicking large photo opens modal */
+    const modal = document.getElementById('modal');
+    const viewerImg = document.getElementById('viewerImg');
+    document.getElementById('photoLarge').addEventListener('click', () => {
+      const src = document.getElementById('largeImg').src;
+      if (!src) return;
+      viewerImg.src = src;
+      modal.style.display = 'flex';
+    });
+    document.getElementById('closeModal').addEventListener('click', () => modal.style.display = 'none');
+    modal.addEventListener('click', (e) => { if (e.target === modal) modal.style.display = 'none'; });
+
+    /* tip send (client-only) */
+    document.getElementById('sendTip').addEventListener('click', () => {
+      const name = document.getElementById('tipName').value.trim() || 'Anonymous';
+      const contact = document.getElementById('tipContact').value.trim();
+      const msg = document.getElementById('tipMsg').value.trim();
+      if (!contact || !msg) { alert('Please provide contact and tip details.'); return; }
+      // simulate sending
+      marquee.textContent = `LIVE: Tip received from ${name} — "${msg.slice(0, 80)}" • Contact: ${contact}`;
+      alert('Tip submitted. Thank you — authorities notified (simulated).');
+      document.getElementById('tipName').value = ''; document.getElementById('tipContact').value = ''; document.getElementById('tipMsg').value = '';
+    });
+
+    /* initial load first profile */
+    loadProfile(suspects[0].id);
+
+    /* small auto-update ticker simulation */
+    setInterval(() => {
+      const rand = suspects[Math.floor(Math.random() * suspects.length)];
+      marquee.textContent = `LIVE: New sighting reported near ${rand.city} • Latest ID: ${rand.id} • Rewards updated example.`;
+    }, 12000);
+  </script>
+</body>
+
+</html>
